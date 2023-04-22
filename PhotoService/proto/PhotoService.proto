@@ -1,0 +1,14 @@
+syntax = "proto3";
+package com.photoService.grpc;
+
+message PhotoesRequest {
+    string uuid = 1;
+}
+
+message PhotoesResponse {
+    bytes image = 1;
+}
+
+service PhotoService {
+    rpc requestPhotoes(PhotoesRequest) returns (PhotoesResponse);
+}
