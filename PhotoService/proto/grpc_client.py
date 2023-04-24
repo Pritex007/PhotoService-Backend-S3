@@ -8,13 +8,18 @@ import PIL.Image as Image
 
 def run():
     with grpc.insecure_channel('localhost:9009') as channel:
-        request = PhotoService_pb2.PhotoesRequest(uuid="pepe.png")
-        stub = PhotoService_pb2_grpc.PhotoServiceStub(channel)
+        photoRequest = PhotoService_pb2.PhotoRequest(uuid="pepe.png")
+        stub = PhotoService_pb2_grpc.PhotoStub(channel)
         print(f'{log_time()} Reply received')
-        response = stub.requestPhotoes(request)
+        response = stub.requestPhoto(photoRequest)
                 
         image = Image.open(io.BytesIO(response.image))
         image.show()
+        
+        addRequest = PhotoService_pb2.AddPhotoRequest(uuid='skibidi.png', image=response.image)
+        add_response = stub.addPhoto(addRequest)
+        
+        print(f'[Add response]{add_response}')
         
 def log_time():
     return strftime("[%H:%M:%S %d/%m/%Y]", localtime())

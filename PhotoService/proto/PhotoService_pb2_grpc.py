@@ -5,7 +5,7 @@ import grpc
 import PhotoService_pb2 as PhotoService__pb2
 
 
-class PhotoServiceStub(object):
+class PhotoStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -14,42 +14,74 @@ class PhotoServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.requestPhotoes = channel.unary_unary(
-                '/com.photoService.grpc.PhotoService/requestPhotoes',
-                request_serializer=PhotoService__pb2.PhotoesRequest.SerializeToString,
-                response_deserializer=PhotoService__pb2.PhotoesResponse.FromString,
+        self.requestPhoto = channel.unary_unary(
+                '/com.photoService.grpc.Photo/requestPhoto',
+                request_serializer=PhotoService__pb2.PhotoRequest.SerializeToString,
+                response_deserializer=PhotoService__pb2.PhotoResponse.FromString,
+                )
+        self.addPhoto = channel.unary_unary(
+                '/com.photoService.grpc.Photo/addPhoto',
+                request_serializer=PhotoService__pb2.AddPhotoRequest.SerializeToString,
+                response_deserializer=PhotoService__pb2.AddPhotoResponse.FromString,
+                )
+        self.removePhoto = channel.unary_unary(
+                '/com.photoService.grpc.Photo/removePhoto',
+                request_serializer=PhotoService__pb2.RemovePhotoRequest.SerializeToString,
+                response_deserializer=PhotoService__pb2.RemovePhotoResponse.FromString,
                 )
 
 
-class PhotoServiceServicer(object):
+class PhotoServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def requestPhotoes(self, request, context):
+    def requestPhoto(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def addPhoto(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def removePhoto(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_PhotoServiceServicer_to_server(servicer, server):
+def add_PhotoServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'requestPhotoes': grpc.unary_unary_rpc_method_handler(
-                    servicer.requestPhotoes,
-                    request_deserializer=PhotoService__pb2.PhotoesRequest.FromString,
-                    response_serializer=PhotoService__pb2.PhotoesResponse.SerializeToString,
+            'requestPhoto': grpc.unary_unary_rpc_method_handler(
+                    servicer.requestPhoto,
+                    request_deserializer=PhotoService__pb2.PhotoRequest.FromString,
+                    response_serializer=PhotoService__pb2.PhotoResponse.SerializeToString,
+            ),
+            'addPhoto': grpc.unary_unary_rpc_method_handler(
+                    servicer.addPhoto,
+                    request_deserializer=PhotoService__pb2.AddPhotoRequest.FromString,
+                    response_serializer=PhotoService__pb2.AddPhotoResponse.SerializeToString,
+            ),
+            'removePhoto': grpc.unary_unary_rpc_method_handler(
+                    servicer.removePhoto,
+                    request_deserializer=PhotoService__pb2.RemovePhotoRequest.FromString,
+                    response_serializer=PhotoService__pb2.RemovePhotoResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'com.photoService.grpc.PhotoService', rpc_method_handlers)
+            'com.photoService.grpc.Photo', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class PhotoService(object):
+class Photo(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def requestPhotoes(request,
+    def requestPhoto(request,
             target,
             options=(),
             channel_credentials=None,
@@ -59,8 +91,42 @@ class PhotoService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/com.photoService.grpc.PhotoService/requestPhotoes',
-            PhotoService__pb2.PhotoesRequest.SerializeToString,
-            PhotoService__pb2.PhotoesResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/com.photoService.grpc.Photo/requestPhoto',
+            PhotoService__pb2.PhotoRequest.SerializeToString,
+            PhotoService__pb2.PhotoResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def addPhoto(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/com.photoService.grpc.Photo/addPhoto',
+            PhotoService__pb2.AddPhotoRequest.SerializeToString,
+            PhotoService__pb2.AddPhotoResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def removePhoto(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/com.photoService.grpc.Photo/removePhoto',
+            PhotoService__pb2.RemovePhotoRequest.SerializeToString,
+            PhotoService__pb2.RemovePhotoResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
