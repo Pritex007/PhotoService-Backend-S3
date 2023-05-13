@@ -59,6 +59,10 @@ services:
       - PYTHONUNBUFFERED=1
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    depends_on:
+    - minio1
+    - minio2
+    - nginx
       
 
 ## By default this config uses default local driver,

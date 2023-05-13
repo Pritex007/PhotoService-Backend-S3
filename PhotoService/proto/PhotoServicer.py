@@ -28,11 +28,11 @@ class PhotoServicer(PhotoService_pb2_grpc.PhotoServicer):
     def __init__(self, client) -> None:
         super().__init__()
         self.client = client
-        self.configure()      
+        self.configure()
     
     def requestPhoto(self, request, context):
         print(f'[Request photo] Request received: {request}', end='')
-                
+
         data_object = self.client.get_object(
             bucket_name=Constants.Minio.bucket_name,
             object_name=request.uuid
@@ -70,7 +70,7 @@ class PhotoServicer(PhotoService_pb2_grpc.PhotoServicer):
         return PhotoService_pb2.RemovePhotoResponse(status=True)
     
     def configure(self):
-        if len(self.client.list_buckets()) == 0:
+        if not self.client.bucket_exists(Constants.Minio.bucket_name):
             self.client.make_bucket(bucket_name=Constants.Minio.bucket_name)
     
 
