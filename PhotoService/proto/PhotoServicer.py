@@ -43,6 +43,14 @@ class PhotoServicer(PhotoService_pb2_grpc.PhotoServicer):
     def addPhoto(self, request, context):
         print(f'[Add photo] Request received: {request.uuid}', end='')
         
+        data_stream = io.BytesIO(request.image)
+        self.client.put_object(
+            bucket_name=Constants.Minio.bucket_name,
+            object_name=request.uuid,
+            data=data_stream,
+            length=len(data_stream.getvalue())
+            )
+        
         url = self.client.get_presigned_url(
             method=Constants.Methods.get,
             bucket_name=Constants.Minio.bucket_name,
@@ -51,13 +59,6 @@ class PhotoServicer(PhotoService_pb2_grpc.PhotoServicer):
         
         print(f'URL: {url}')
         
-        data_stream = io.BytesIO(request.image)
-        self.client.put_object(
-            bucket_name=Constants.Minio.bucket_name,
-            object_name=request.uuid,
-            data=data_stream,
-            length=len(data_stream.getvalue())
-            )
         return PhotoService_pb2.AddPhotoResponse(status=True, url=url)
     
     def removePhoto(self, request, context):
