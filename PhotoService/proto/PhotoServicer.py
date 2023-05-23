@@ -16,8 +16,8 @@ class Constants():
     class Minio():
         endpoint='host.docker.internal:9000' if not Debug else 'localhost:9000'
         bucket_name='photos'
-        access_key='minioadmin'
-        secret_key='minioadmin'
+        access_key='minio'
+        secret_key='minio124'
         secure=False
     class Server():
         insecure_port='0.0.0.0:9009' if not Debug else "localhost:9009"
