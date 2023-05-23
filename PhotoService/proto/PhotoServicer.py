@@ -8,7 +8,7 @@ import sys
 from minio import Minio
 from enum import Enum
 
-Debug = False
+Debug = True
 
 class Constants():
     class Methods():
