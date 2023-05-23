@@ -9,3 +9,9 @@
 ```commandline
 docker compose up
    ```
+- зайти в папку репозитория
+- зайти в папку `PhotoService/proto`
+- запустить команду 
+```commandline
+python PhotoServicer.py
+   ```
