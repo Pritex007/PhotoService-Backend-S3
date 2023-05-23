@@ -49,22 +49,6 @@ services:
       - minio1
       - minio2
 
-  backend_s3:
-    build: ../PhotoService/
-    container_name: backend_s3
-    command: python3 proto/PhotoServicer.py
-    ports:
-      - "9009:9009"
-    environment:
-      - PYTHONUNBUFFERED=1
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    depends_on:
-    - minio1
-    - minio2
-    - nginx
-      
-
 ## By default this config uses default local driver,
 ## For custom volumes replace with volume driver configuration.
 volumes:
